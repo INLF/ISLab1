@@ -1,0 +1,19 @@
+services:
+  pg-lab:
+    container_name: pg-lab
+    image: 'postgres:15'
+    restart: on-failure
+    volumes:
+      - ./src/main/resources/db.migration/V1_initial_arhitecture.sql:/docker-entrypoint-initdb.d/V1_initial_arhitecture.sql
+    ports:
+      - 5531:5432
+    environment:
+      - POSTGRES_DB=mydatabase
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
