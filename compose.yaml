@@ -1,0 +1,29 @@
+services:
+  pg-lab:
+    container_name: pg-lab
+    image: 'postgres:15'
+    restart: on-failure
+    ports:
+      - 5531:5432
+    environment:
+      - POSTGRES_DB=mydatabase
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  redis-lab:
+    container_name: redis-lab
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6479:6379"
+    command: /bin/sh -c "redis-server --requirepass password"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
