@@ -1,3 +1,33 @@
 spring:
   application:
     name: ISlab1
+  datasource:
+    url: jdbc:postgresql://localhost:5531/mydatabase?prepareThreshold=0
+    driver-class-name: org.postgresql.Driver
+    username: admin
+    password: admin
+  jpa:
+    properties:
+      eclipselink:
+        ddl-generation: create-tables
+        ddl-generation.output-mode: database
+        logging.level: FINE
+        logging.parameters: true
+    show-sql: true
+  data:
+    redis:
+      host: localhost
+      port: 6479
+      password: password
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+logging:
+  level:
+    org.springframework.security: DEBUG
+#db:
+#  url: jdbc:postgresql://localhost:5531/mydatabase?prepareThreshold=0
+#  driver: org.postgresql.Driver
+#  user: admin
+#  pwd: admin

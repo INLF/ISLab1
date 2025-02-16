@@ -3,8 +3,6 @@ services:
     container_name: pg-lab
     image: 'postgres:15'
     restart: on-failure
-    volumes:
-      - ./src/main/resources/db.migration/V1_initial_arhitecture.sql:/docker-entrypoint-initdb.d/V1_initial_arhitecture.sql
     ports:
       - 5531:5432
     environment:
@@ -16,4 +14,16 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  redis-lab:
+    container_name: redis-lab
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6479:6379"
+    command: /bin/sh -c "redis-server --requirepass password"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 1s
+      timeout: 3s
+      retries: 30
 
